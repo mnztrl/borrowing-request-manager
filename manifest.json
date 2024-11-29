@@ -1,0 +1,18 @@
+{
+   "id": "borrowing-requests-manager",
+   "title": "Requests Manager",
+   "subtitle": "Send borrowing requests unable to be fulfilled in Alma to external ILL service",
+   "author": "Niklas Lehto",
+   "pages": {
+      "config": "/#/config"
+   },
+   "icon": {
+      "type": "font",
+      "value": "fa fa-paper-plane"
+   },
+   "contentSecurity": {
+      "sandbox": {
+         "popups": true
+      }
+   }
+}

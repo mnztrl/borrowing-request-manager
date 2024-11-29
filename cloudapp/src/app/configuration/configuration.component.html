@@ -1,0 +1,87 @@
+<app-topmenu>
+    <div buttons>
+        <button mat-flat-button type="button" color="primary" (click)="save()" [disabled]="!(form?.valid && form?.dirty)">Save</button><!-- form?.dirty || -->
+    </div>
+</app-topmenu>
+<div class="loading-shade" *ngIf="saving">
+    <mat-progress-spinner mode="indeterminate" diameter="50"></mat-progress-spinner>
+</div>
+<form [formGroup]="form">
+    <section class="config-section">
+        <mat-form-field>
+            <input matInput placeholder="ILL Form Base URL" formControlName="illFormBaseUrl" required>
+        </mat-form-field>
+
+        <mat-error *ngIf="illFormBaseUrl.invalid && (illFormBaseUrl.dirty || illFormBaseUrl.touched)">
+            <div *ngIf="illFormBaseUrl.errors.pattern">
+                Please enter a valid URL. No query parameters are allowed.
+            </div>
+        </mat-error>
+    </section>
+    <section class="config-section">
+        <mat-form-field>
+            <textarea rows="8" matInput placeholder="ILL Form Query String" formControlName="illFormQueryString" required></textarea>
+        </mat-form-field>
+        <mat-icon class="mat-tooltip-trigger uxf-icon uxf-info-circle" #tooltip="matTooltip"
+                  matTooltip="Enclose values in curly braces, e.g. {{ '{isbn}' }}. See below for a full list of supported values."
+                  matTooltipPosition="below"
+                  matTooltipHideDelay="500"
+                  aria-label="Enclose values in curly braces. See below for a full list of supported values."></mat-icon>
+        <mat-error *ngIf="illFormQueryString.invalid && (illFormQueryString.dirty || illFormQueryString.touched)">
+            <div *ngIf="illFormQueryString.errors.pattern">
+                Please enter a valid query string.
+            </div>
+        </mat-error>
+    </section>
+    <section class="config-section">
+        <mat-form-field>
+            <input matInput placeholder="ILL Form Button Label" formControlName="illFormButtonLabel" required>
+        </mat-form-field>
+
+        <mat-error *ngIf="illFormButtonLabel.invalid && (illFormButtonLabel.dirty || illFormButtonLabel.touched)">
+            <div *ngIf="illFormButtonLabel.errors.required">
+                Please enter a label for the link to the external ILL-form.
+            </div>
+        </mat-error>
+    </section>
+</form>
+<mat-card>
+    <mat-card-title>Supported values in query string</mat-card-title>
+    <mat-card-subtitle>Media data</mat-card-subtitle>
+    <mat-card-content>
+        <mat-list>
+            <mat-list-item>article_title</mat-list-item>
+            <mat-list-item>author</mat-list-item>
+            <mat-list-item>book_title</mat-list-item>
+            <mat-list-item>chapter_author</mat-list-item>
+            <mat-list-item>chapter_title</mat-list-item>
+            <mat-list-item>doi</mat-list-item>
+            <mat-list-item>edition</mat-list-item>
+            <mat-list-item>isbn</mat-list-item>
+            <mat-list-item>issn</mat-list-item>
+            <mat-list-item>journal_title</mat-list-item>
+            <mat-list-item>media_type</mat-list-item>
+            <mat-list-item>issue</mat-list-item>
+            <mat-list-item>pages</mat-list-item>
+            <mat-list-item>pmid</mat-list-item>
+            <mat-list-item>volume</mat-list-item>
+            <mat-list-item>year</mat-list-item>
+        </mat-list>
+    </mat-card-content>
+    <mat-card-subtitle>User data</mat-card-subtitle>
+    <mat-card-content>
+        <mat-list>
+            <mat-list-item>address</mat-list-item>
+            <mat-list-item>city</mat-list-item>
+            <mat-list-item>city_code</mat-list-item>
+            <mat-list-item>email</mat-list-item>
+            <mat-list-item>name</mat-list-item>
+            <mat-list-item>phone</mat-list-item>
+            <mat-list-item>primary_id</mat-list-item>
+        </mat-list>
+    </mat-card-content>
+    <mat-card-subtitle>Query string example</mat-card-subtitle>
+    <mat-card-content>
+        {{ 'author={author}&booktitle={book_title}&edition={edition}&isbn={isbn}&year={year}&address={address}&city={city}&citycode={city_code}&email={email}&name={name}&primaryid={primary_id}' }}
+    </mat-card-content>
+</mat-card>

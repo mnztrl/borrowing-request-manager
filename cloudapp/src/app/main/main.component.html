@@ -1,0 +1,26 @@
+<div *ngIf="entities$ | async as entities">
+    <ng-container
+        *ngIf="entities.length > 0 && entityType === 'BORROWING_REQUEST'; then entitylist; else noentities"
+    ></ng-container>
+    <ng-template #noentities>
+        Please navigate to the Borrowing Requests page.
+    </ng-template>
+    <ng-template #entitylist>
+        <div class="eca-actions" *ngIf="selectedEntity && userUtils">
+            <a href="{{ getIllFormLink() }}" target="_blank"><button mat-flat-button color="primary">{{ getIllFormButtonLabel() }}</button></a>
+        </div>
+        <label id="entities-radio-group-label">Select a borrowing request:</label>
+        <mat-radio-group
+            aria-labelledby="entities-radio-group-label"
+            class="entities-radio-group"
+            [(ngModel)]="selectedEntity"
+            (change)="entitySelected($event)">
+            <mat-radio-button *ngFor="let entity of entities" [value]="entity">
+                {{entity.description}}
+            </mat-radio-button>
+        </mat-radio-group>
+    </ng-template>
+</div>
+<div class="loading-shade" *ngIf="loading">
+    <mat-spinner diameter="50"></mat-spinner>
+</div>
